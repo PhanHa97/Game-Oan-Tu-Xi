@@ -12,8 +12,12 @@ class Player extends Component {
                         className="mt-4"
                         width={50}
                         height={50}
-                        src={this.props.mangDatCuoc.find(item => item.datCuoc === true).hinhAnh}
-                        alt={this.props.mangDatCuoc.find(item => item.datCuoc === true).hinhAnh}
+                        src={
+                            this.props.mangDatCuoc.find((item) => item.datCuoc === true).hinhAnh
+                        }
+                        alt={
+                            this.props.mangDatCuoc.find((item) => item.datCuoc === true).hinhAnh
+                        }
                     />
                 </div>
                 <div className="speech-bubble"></div>
@@ -26,26 +30,31 @@ class Player extends Component {
 
                 <div className="row">
                     {this.props.mangDatCuoc.map((item, index) => {
-
                         // Xét giá trị cược thêm viền cho item được chọn
                         let border = {};
                         if (item.datCuoc) {
-                            border = { border: '3px solid orange' };
+                            border = { border: "3px solid orange" };
                         }
 
-                        return <div className="col-4">
-                            <button style={border} className="btnItem">
-                                <img
-                                    width={35}
-                                    height={35}
-                                    src={item.hinhAnh}
-                                    alt={item.hinhAnh}
-                                />
-                            </button>
-                        </div>
+                        return (
+                            <div className="col-4">
+                                <button
+                                    style={border}
+                                    className="btnItem"
+                                    onClick={() => {
+                                        this.props.datCuoc(item.ma);
+                                    }}
+                                >
+                                    <img
+                                        width={35}
+                                        height={35}
+                                        src={item.hinhAnh}
+                                        alt={item.hinhAnh}
+                                    />
+                                </button>
+                            </div>
+                        );
                     })}
-
-
                 </div>
             </div>
         );
@@ -63,4 +72,23 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, null)(Player);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        /**
+         * key: value
+         *  - key : đại diện cho tên props
+         *  - value:  là một phương thức
+         */
+        datCuoc: (maCuoc) => {
+            // tạo action
+            const action = {
+                type: "CHON_KEO_BUA_BAO",
+                payload: maCuoc,
+            }
+            // Gửi action vào store
+            dispatch(action);
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

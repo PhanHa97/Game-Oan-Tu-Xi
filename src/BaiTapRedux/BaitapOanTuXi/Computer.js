@@ -1,12 +1,25 @@
-import React, { Component } from 'react'
-import { connect } from "react-redux"
+import React, { Component } from "react";
+import { connect } from "react-redux";
 class Computer extends Component {
     render() {
+        let keyframe = `@keyframes randomItem${Date.now()}
+         {
+            from {top: 0px;}
+            to {top: 200px;}
+          }`;
+
         return (
             <div className="text-center playerGame">
-                <div className="theThink">
-                    <img className="mt-4"
-                        style={{ transform: "rotate(120deg)" }}
+                <style>{keyframe}</style>
+                <div className="theThink" style={{ position: `relative` }}>
+                    <img
+                        className="mt-4"
+                        style={{
+                            position: `absolute`,
+                            left: `30%`,
+                            animation: `randomItem${Date.now()}0.5s`,
+                            transform: `rotate(120deg)`,
+                        }}
                         width={50}
                         height={50}
                         src={this.props.computer.hinhAnh}
@@ -21,14 +34,14 @@ class Computer extends Component {
                     alt="playerComputer.png"
                 />
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         computer: state.BaiTapOanTuXiReducer.computer,
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(Computer);

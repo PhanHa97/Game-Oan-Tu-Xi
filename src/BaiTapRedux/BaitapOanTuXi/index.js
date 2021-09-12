@@ -3,8 +3,10 @@ import "./BaiTapOanTuXi.css";
 import Computer from "./Computer";
 import Player from "./Player";
 import ThongTinTroChoi from "./ThongTinTroChoi";
+import { connect } from "react-redux";
 
-export default class BaiTapOanTuXi extends Component {
+class BaiTapOanTuXi extends Component {
+
     render() {
         return (
             <div className="gameOanTuXi ">
@@ -15,7 +17,11 @@ export default class BaiTapOanTuXi extends Component {
 
                     <div className="col-4">
                         <ThongTinTroChoi />
-                        <button className="btn btn-success p-2 mt-2 display-4">Play Game</button>
+                        <button className="btn btn-success p-2 mt-2 display-4" onClick={() => {
+                            this.props.playGame()
+                        }}>
+                            Play Game
+                        </button>
                     </div>
 
                     <div className="col-4">
@@ -26,3 +32,28 @@ export default class BaiTapOanTuXi extends Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+
+
+
+        playGame: () => {
+            let count = 0;
+            //  Khai báo hàm lặp đi lặp lại
+            let randomComputerItem = setInterval(() => {
+                dispatch({
+                    type: 'RAN_DOM'
+                })
+                count++;
+                if (count > 35) {
+                    // Dừng hàm setInterval lại
+                    clearInterval(randomComputerItem)
+                }
+            }, 100);
+        },
+    };
+};
+
+export default connect(null, mapDispatchToProps)(BaiTapOanTuXi);
