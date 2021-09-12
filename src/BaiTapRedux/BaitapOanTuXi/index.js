@@ -6,7 +6,6 @@ import ThongTinTroChoi from "./ThongTinTroChoi";
 import { connect } from "react-redux";
 
 class BaiTapOanTuXi extends Component {
-
     render() {
         return (
             <div className="gameOanTuXi ">
@@ -17,9 +16,12 @@ class BaiTapOanTuXi extends Component {
 
                     <div className="col-4">
                         <ThongTinTroChoi />
-                        <button className="btn btn-success p-2 mt-2 display-4" onClick={() => {
-                            this.props.playGame()
-                        }}>
+                        <button
+                            className="btn btn-success p-2 mt-2 display-4"
+                            onClick={() => {
+                                this.props.playGame();
+                            }}
+                        >
                             Play Game
                         </button>
                     </div>
@@ -34,23 +36,25 @@ class BaiTapOanTuXi extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-
     return {
-
-
-
         playGame: () => {
             let count = 0;
             //  Khai báo hàm lặp đi lặp lại
             let randomComputerItem = setInterval(() => {
                 dispatch({
-                    type: 'RAN_DOM'
-                })
+                    type: "RAN_DOM",
+                });
                 count++;
                 if (count > 35) {
                     // Dừng hàm setInterval lại
-                    clearInterval(randomComputerItem)
+                    clearInterval(randomComputerItem);
+
+                    dispatch({
+                        type: 'END_GAME'
+                    })
                 }
+
+
             }, 100);
         },
     };
